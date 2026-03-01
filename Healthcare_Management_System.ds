@@ -1,0 +1,3940 @@
+/*
+ * Author       : rahul2410509_ssn
+ * Generated on : 01-Mar-2026 21:24:50
+ * Version      : 1.0
+ */
+ application "Healthcare Management System"
+ {
+ 	date format = "dd-MMM-yyyy"
+ 	time zone = "America/Los_Angeles"
+ 	time format = "24-hr"
+ 	forms
+	{
+		form appointment
+		{
+			displayname = "Appointment"
+			success message = "Appointment Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			appointment_id
+			(
+    			type = autonumber
+				displayname = "Appointment ID"
+				start index = 1
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			patient
+			(
+				type = list	
+				displayname = "Patient"
+				values  = patient_profile.ID
+    			displayformat = [patient_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			doctor
+			(
+				type = list	
+				displayname = "Doctor"
+				values  = doctor_profile.ID
+    			displayformat = [doctor_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			scheduled_date
+			(
+    			type = date
+				displayname = "Scheduled Date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			scheduled_time
+			(
+    			type = time
+				displayname = "Scheduled Time"
+				timedisplayoptions = "hh:mm:ss" 
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			duration
+			(
+				type = number
+				displayname = "Duration"
+				maxchar = 19
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			status
+			(
+				type = picklist
+				displayname = "Status"
+				values = {"Confirmed","Canceled","Rescheduled","Pending"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			reason_for_visit
+			(
+    			type = textarea
+				displayname = "Reason For Visit"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			location
+			(
+    			type = address
+				displayname = "Location"
+     			capture_coordinates = true
+     			adjust_using_map = false
+     			address_line_1
+     			(
+	     			  type = address_line_1
+	     			  displayname = "Address Line 1"
+     			) 
+     			address_line_2
+     			(
+	     			  type = address_line_2
+	     			  displayname = "Address Line 2"
+	     			 visibility = false
+     			) 
+     			district_city
+     			(
+	     			  type = district_city
+	     			  displayname = "City / District"
+	     			 visibility = false
+     			) 
+     			state_province
+     			(
+	     			  type = state_province
+	     			  displayname = "State / Province"
+	     			 visibility = false
+     			) 
+     			postal_Code
+     			(
+	     			  type = postal_Code
+	     			  displayname = "Postal Code"
+	     			 visibility = false
+     			) 
+     			country
+     			(
+	     			  type = country
+	     			  displayname = "Country"
+	     			 visibility = false
+     			) 
+     			latitude
+     			(
+	     			  type = latitude
+	     			  displayname = "Latitude"
+	     			 visibility = false
+     			) 
+     			longitude
+     			(
+	     			  type = longitude
+	     			  displayname = "Longitude"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			notes
+			(
+    			type = textarea
+				displayname = "Notes"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+			blueprint components
+			{
+				stages = {"Appointment Created","Appointment Confirmed","Appointment Pending Confirmation","Appointment Cancelled","Appointment In Progress","Appointment Rescheduled","Appointment Completed","Appointment Closed","Appointment Follow-Up Required"}
+			}
+		}
+		form doctor_profile
+		{
+			displayname = "Doctor Profile"
+			success message = "Doctor Profile Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			doctor_id
+			(
+    			type = autonumber
+				displayname = "Doctor ID"
+				start index = 1
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			full_name
+			(
+    			type = name
+				displayname = "Full Name"
+     			prefix
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+	     			 visibility = false
+     			) 
+     			suffix
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			specialty
+			(
+				type = picklist
+				displayname = "Specialty"
+				values = {"Pediatrics","Neurology","Dermatology","Orthopedics","General Practice","Cardiology"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			license_number
+			(
+    			type = text
+				displayname = "License Number"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			contact_number
+			(
+    			type = phonenumber
+				displayname = "Contact Number"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			email
+			(
+    			type = email
+				displayname = "Email"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			department
+			(
+				type = picklist
+				displayname = "Department"
+				values = {"Surgery","Internal Medicine","Obstetrics","Psychiatry"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			office_location
+			(
+    			type = address
+				displayname = "Office Location"
+     			capture_coordinates = true
+     			adjust_using_map = false
+     			address_line_1
+     			(
+	     			  type = address_line_1
+	     			  displayname = "Address Line 1"
+     			) 
+     			address_line_2
+     			(
+	     			  type = address_line_2
+	     			  displayname = "Address Line 2"
+	     			 visibility = false
+     			) 
+     			district_city
+     			(
+	     			  type = district_city
+	     			  displayname = "City / District"
+	     			 visibility = false
+     			) 
+     			state_province
+     			(
+	     			  type = state_province
+	     			  displayname = "State / Province"
+	     			 visibility = false
+     			) 
+     			postal_Code
+     			(
+	     			  type = postal_Code
+	     			  displayname = "Postal Code"
+	     			 visibility = false
+     			) 
+     			country
+     			(
+	     			  type = country
+	     			  displayname = "Country"
+	     			 visibility = false
+     			) 
+     			latitude
+     			(
+	     			  type = latitude
+	     			  displayname = "Latitude"
+	     			 visibility = false
+     			) 
+     			longitude
+     			(
+	     			  type = longitude
+	     			  displayname = "Longitude"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			availability_status
+			(
+				type = picklist
+				displayname = "Availability Status"
+				values = {"Onsite","Available","Unavailable"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			professional_bio
+			(
+    			type = textarea
+				displayname = "Professional Bio"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form lab_result
+		{
+			displayname = "Lab Result"
+			success message = "Lab Result Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			patient
+			(
+				type = list	
+				displayname = "Patient"
+				values  = patient_profile.ID
+    			displayformat = [patient_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			doctor
+			(
+				type = list	
+				displayname = "Doctor"
+				values  = doctor_profile.ID
+    			displayformat = [doctor_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			test_name
+			(
+    			type = text
+				displayname = "Test Name"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			result_value
+			(
+    			type = text
+				displayname = "Result Value"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			reference_range
+			(
+    			type = text
+				displayname = "Reference Range"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			collected_date
+			(
+    			type = date
+				displayname = "Collected Date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			reported_date
+			(
+    			type = date
+				displayname = "Reported Date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			status
+			(
+				type = picklist
+				displayname = "Status"
+				values = {"Completed","Pending","Reviewed"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			notes
+			(
+    			type = textarea
+				displayname = "Notes"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form messaging
+		{
+			displayname = "Message"
+			success message = "Message Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			sender_1
+			(
+				type = list	
+				displayname = "Sender"
+				values  = patient_profile.ID
+    			displayformat = [patient_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			recipient
+			(
+				type = list	
+				displayname = "Recipient"
+				values  = doctor_profile.ID
+    			displayformat = [doctor_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			appointment
+			(
+				type = list	
+				displayname = "Appointment"
+				values  = appointment.ID
+    			displayformat = [appointment_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			subject_1
+			(
+    			type = text
+				displayname = "Subject"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			body
+			(
+    			type = textarea
+				displayname = "Body"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			sent_at
+			(
+    			type = datetime
+				displayname = "Sent At"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			read_status
+			(
+				type = radiobuttons
+				displayname = "Read Status"
+				values = {"Read","Unread"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			encryption_status
+			(
+				type = radiobuttons
+				displayname = "Encryption Status"
+				values = {"Unencrypted","Encrypted"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			message_type
+			(
+				type = picklist
+				displayname = "Message Type"
+				values = {"Doctor To Patient","System Alert","Patient To Doctor"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form patient_profile
+		{
+			displayname = "Patient Profile"
+			success message = "Patient Profile Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			patient_id
+			(
+    			type = autonumber
+				displayname = "Patient ID"
+				start index = 1
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			full_name
+			(
+    			type = name
+				displayname = "Full Name"
+     			prefix
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+	     			 visibility = false
+     			) 
+     			suffix
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			date_of_birth
+			(
+    			type = date
+				displayname = "Date Of Birth"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			gender
+			(
+				type = picklist
+				displayname = "Gender"
+				values = {"Male","Female","Other"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			contact_number
+			(
+    			type = phonenumber
+				displayname = "Contact Number"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			email
+			(
+    			type = email
+				displayname = "Email"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			medical_history
+			(
+    			type = textarea
+				displayname = "Medical History"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			allergies
+			(
+    			type = textarea
+				displayname = "Allergies"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			emergency_contact
+			(
+    			type = name
+				displayname = "Emergency Contact"
+     			prefix
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+	     			 visibility = false
+     			) 
+     			suffix
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			primary_care_physician
+			(
+				type = list	
+				displayname = "Primary Care Physician"
+				values  = doctor_profile.ID
+    			displayformat = [doctor_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form prescription
+		{
+			displayname = "Prescription"
+			success message = "Prescription Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			patient
+			(
+				type = list	
+				displayname = "Patient"
+				values  = patient_profile.ID
+    			displayformat = [patient_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			doctor
+			(
+				type = list	
+				displayname = "Doctor"
+				values  = doctor_profile.ID
+    			displayformat = [doctor_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			medication_name
+			(
+    			type = text
+				displayname = "Medication Name"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			dosage
+			(
+    			type = text
+				displayname = "Dosage"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			frequency
+			(
+    			type = text
+				displayname = "Frequency"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			start_date
+			(
+    			type = date
+				displayname = "Start Date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			end_date
+			(
+    			type = date
+				displayname = "End Date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			prescribed_date
+			(
+    			type = date
+				displayname = "Prescribed Date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			status
+			(
+				type = picklist
+				displayname = "Status"
+				values = {"Active","Completed","Expired","Paused"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form soap_note
+		{
+			displayname = "SOAP Note"
+			success message = "Soap Note Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			appointment
+			(
+				type = list	
+				displayname = "Appointment"
+				values  = appointment.ID
+    			displayformat = [appointment_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			subjective
+			(
+    			type = textarea
+				displayname = "Subjective"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			objective
+			(
+    			type = textarea
+				displayname = "Objective"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			assessment
+			(
+    			type = textarea
+				displayname = "Assessment"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			plan
+			(
+    			type = textarea
+				displayname = "Plan"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			entered_by
+			(
+				type = list	
+				displayname = "Entered By"
+				values  = doctor_profile.ID
+    			displayformat = [doctor_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			entry_date
+			(
+    			type = date
+				displayname = "Entry Date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			entry_time
+			(
+    			type = time
+				displayname = "Entry Time"
+				timedisplayoptions = "hh:mm:ss" 
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			last_updated
+			(
+    			type = datetime
+				displayname = "Last Updated"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+			blueprint components
+			{
+				stages = {"Appointment Scheduled","Patient Checked In","Appointment Rescheduled","Appointment Cancelled","Consultation In Progress","SOAP Note Created","Diagnosis Confirmed","Further Testing Required","Prescription Issued","Follow-Up Scheduled","Test Results Received","Test Scheduled","Medication Dispensed","Prescription Revised","Patient Monitoring Active","Follow-Up Completed","Follow-Up Rescheduled","Follow-Up Cancelled","Care Plan Updated","Patient Discharged","Emergency Alert Triggered","Case Closed","Emergency Response Initiated","Patient Stabilized","Patient Transferred"}
+			}
+		}
+	}
+	reports
+	{
+		list messaging_Report
+		{
+			displayName = "All Messages"
+			show all rows from messaging    
+			(
+				sender_1 as "Sender"
+				recipient as "Recipient"
+				appointment as "Appointment"
+				subject_1 as "Subject"
+				body as "Body"
+				sent_at as "Sent At"
+				read_status as "Read Status"
+				encryption_status as "Encryption Status"
+				message_type as "Message Type"
+			)
+			conditional formatting
+			(
+				"New Formatting1"
+				{
+				condition = (message_type == "Doctor To Patient")
+				fields = [message_type]
+				format = "color:#ffffff;background-color:#765f89;"
+				}
+				"New Formatting2"
+				{
+				condition = (message_type == "System Alert")
+				fields = [message_type]
+				format = "color:#000000;background-color:#1bbc9b;"
+				}
+			)
+		}
+		kanban messaging_by_message_type
+		{
+			displayName = "Message Types"
+			show all rows from messaging    
+			(
+				sender_1 as "Sender"
+				recipient as "Recipient"
+				appointment as "Appointment"
+				subject_1 as "Subject"
+				body as "Body"
+				sent_at as "Sent At"
+				read_status as "Read Status"
+				encryption_status as "Encryption Status"
+				message_type as "Message Type"
+			)
+			options
+			(
+	 			display field = message_type
+	 		)
+		}
+		list soap_note_Report
+		{
+			displayName = "All Soap Notes"
+			show all rows from soap_note    
+			(
+				appointment as "Appointment"
+				subjective as "Subjective"
+				objective as "Objective"
+				assessment as "Assessment"
+				plan as "Plan"
+				entered_by as "Entered By"
+				entry_date as "Entry Date"
+				entry_time as "Entry Time"
+				last_updated as "Last Updated"
+			)
+		}
+		list appointment_Report
+		{
+			displayName = "All Appointments"
+			show all rows from appointment    
+			(
+				appointment_id as "Appointment ID"
+				patient as "Patient"
+				doctor as "Doctor"
+				scheduled_date as "Scheduled Date"
+				scheduled_time as "Scheduled Time"
+				duration as "Duration"
+				status as "Status"
+				reason_for_visit as "Reason For Visit"
+				location  as "Location"
+	 			(
+	      			displayformat = [address_line_1+""+address_line_2+""+district_city+""+state_province+""+postal_Code+""+country]
+	      			enable = Link_to_Map,Show_As_Text
+	 			)
+				notes as "Notes"
+			)
+			conditional formatting
+			(
+				"New Formatting1"
+				{
+				condition = (status == "Confirmed")
+				fields = [status]
+				format = "color:#ffffff;background-color:#765f89;"
+				}
+				"New Formatting2"
+				{
+				condition = (status == "Pending")
+				fields = [status]
+				format = "color:#000000;background-color:#1bbc9b;"
+				}
+				"New Formatting3"
+				{
+				condition = (status == "Rescheduled")
+				fields = [status]
+				format = "color:#ffffff;background-color:#e84c3d;"
+				}
+			)
+		}
+		kanban appointment_by_status
+		{
+			displayName = "Statuses"
+			show all rows from appointment    
+			(
+				appointment_id as "Appointment ID"
+				patient as "Patient"
+				doctor as "Doctor"
+				scheduled_date as "Scheduled Date"
+				scheduled_time as "Scheduled Time"
+				duration as "Duration"
+				status as "Status"
+				reason_for_visit as "Reason For Visit"
+				location  as "Location"
+	 			(
+	      			displayformat = [address_line_1+""+address_line_2+""+district_city+""+state_province+""+postal_Code+""+country]
+	      			enable = Link_to_Map,Show_As_Text
+	 			)
+				notes as "Notes"
+			)
+			options
+			(
+	 			display field = status
+	 		)
+		}
+		list doctor_profile_Report
+		{
+			displayName = "All Doctor Profiles"
+			show all rows from doctor_profile    
+			(
+				doctor_id as "Doctor ID"
+				full_name  as "Full Name"
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				specialty as "Specialty"
+				license_number as "License Number"
+				contact_number as "Contact Number"
+				email as "Email"
+				department as "Department"
+				office_location  as "Office Location"
+	 			(
+	      			displayformat = [address_line_1+""+address_line_2+""+district_city+""+state_province+""+postal_Code+""+country]
+	      			enable = Link_to_Map,Show_As_Text
+	 			)
+				availability_status as "Availability Status"
+				professional_bio as "Professional Bio"
+			)
+			conditional formatting
+			(
+				"New Formatting1"
+				{
+				condition = (department == "Internal Medicine")
+				fields = [department]
+				format = "color:#ffffff;background-color:#765f89;"
+				}
+				"New Formatting2"
+				{
+				condition = (department == "Psychiatry")
+				fields = [department]
+				format = "color:#000000;background-color:#1bbc9b;"
+				}
+				"New Formatting3"
+				{
+				condition = (department == "Surgery")
+				fields = [department]
+				format = "color:#ffffff;background-color:#e84c3d;"
+				}
+			)
+		}
+		kanban doctor_profile_by_specialty
+		{
+			displayName = "Specialties"
+			show all rows from doctor_profile    
+			(
+				doctor_id as "Doctor ID"
+				full_name  as "Full Name"
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				specialty as "Specialty"
+				license_number as "License Number"
+				contact_number as "Contact Number"
+				email as "Email"
+				department as "Department"
+				office_location  as "Office Location"
+	 			(
+	      			displayformat = [address_line_1+""+address_line_2+""+district_city+""+state_province+""+postal_Code+""+country]
+	      			enable = Link_to_Map,Show_As_Text
+	 			)
+				availability_status as "Availability Status"
+				professional_bio as "Professional Bio"
+			)
+			options
+			(
+	 			display field = specialty
+	 		)
+		}
+		list prescription_Report
+		{
+			displayName = "All Prescriptions"
+			show all rows from prescription    
+			(
+				patient as "Patient"
+				doctor as "Doctor"
+				medication_name as "Medication Name"
+				dosage as "Dosage"
+				frequency as "Frequency"
+				start_date as "Start Date"
+				end_date as "End Date"
+				prescribed_date as "Prescribed Date"
+				status as "Status"
+			)
+			conditional formatting
+			(
+				"New Formatting1"
+				{
+				condition = (status == "Completed")
+				fields = [status]
+				format = "color:#ffffff;background-color:#765f89;"
+				}
+				"New Formatting2"
+				{
+				condition = (status == "Expired")
+				fields = [status]
+				format = "color:#000000;background-color:#1bbc9b;"
+				}
+				"New Formatting3"
+				{
+				condition = (status == "Paused")
+				fields = [status]
+				format = "color:#ffffff;background-color:#e84c3d;"
+				}
+			)
+		}
+		kanban prescription_by_status
+		{
+			displayName = "Statuses"
+			show all rows from prescription    
+			(
+				patient as "Patient"
+				doctor as "Doctor"
+				medication_name as "Medication Name"
+				dosage as "Dosage"
+				frequency as "Frequency"
+				start_date as "Start Date"
+				end_date as "End Date"
+				prescribed_date as "Prescribed Date"
+				status as "Status"
+			)
+			options
+			(
+	 			display field = status
+	 		)
+		}
+		list patient_profile_Report
+		{
+			displayName = "All Patient Profiles"
+			show all rows from patient_profile    
+			(
+				patient_id as "Patient ID"
+				full_name  as "Full Name"
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				date_of_birth as "Date Of Birth"
+				gender as "Gender"
+				contact_number as "Contact Number"
+				email as "Email"
+				medical_history as "Medical History"
+				allergies as "Allergies"
+				emergency_contact  as "Emergency Contact"
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				primary_care_physician as "Primary Care Physician"
+			)
+			conditional formatting
+			(
+				"New Formatting1"
+				{
+				condition = (gender == "Female")
+				fields = [gender]
+				format = "color:#ffffff;background-color:#765f89;"
+				}
+				"New Formatting2"
+				{
+				condition = (gender == "Male")
+				fields = [gender]
+				format = "color:#000000;background-color:#1bbc9b;"
+				}
+			)
+		}
+		kanban patient_profile_by_gender
+		{
+			displayName = "Genders"
+			show all rows from patient_profile    
+			(
+				patient_id as "Patient ID"
+				full_name  as "Full Name"
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				date_of_birth as "Date Of Birth"
+				gender as "Gender"
+				contact_number as "Contact Number"
+				email as "Email"
+				medical_history as "Medical History"
+				allergies as "Allergies"
+				emergency_contact  as "Emergency Contact"
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				primary_care_physician as "Primary Care Physician"
+			)
+			options
+			(
+	 			display field = gender
+	 		)
+		}
+		list lab_result_Report
+		{
+			displayName = "All Lab Results"
+			show all rows from lab_result    
+			(
+				patient as "Patient"
+				doctor as "Doctor"
+				test_name as "Test Name"
+				result_value as "Result Value"
+				reference_range as "Reference Range"
+				collected_date as "Collected Date"
+				reported_date as "Reported Date"
+				status as "Status"
+				notes as "Notes"
+			)
+			conditional formatting
+			(
+				"New Formatting1"
+				{
+				condition = (status == "Completed")
+				fields = [status]
+				format = "color:#ffffff;background-color:#765f89;"
+				}
+				"New Formatting2"
+				{
+				condition = (status == "Pending")
+				fields = [status]
+				format = "color:#000000;background-color:#1bbc9b;"
+				}
+				"New Formatting3"
+				{
+				condition = (status == "Reviewed")
+				fields = [status]
+				format = "color:#ffffff;background-color:#e84c3d;"
+				}
+			)
+		}
+		kanban lab_result_by_status
+		{
+			displayName = "Statuses"
+			show all rows from lab_result    
+			(
+				patient as "Patient"
+				doctor as "Doctor"
+				test_name as "Test Name"
+				result_value as "Result Value"
+				reference_range as "Reference Range"
+				collected_date as "Collected Date"
+				reported_date as "Reported Date"
+				status as "Status"
+				notes as "Notes"
+			)
+			options
+			(
+	 			display field = status
+	 		)
+		}
+	}
+	pages
+	{
+		page DashBoard
+		{
+			displayname = "Dashboard"
+			Content="<zml    \t\t\n\t\t\n\t\t\n\t\t\n\t\t\n>\n\t<layout>\n\t<row>\n\t<column\n   \t\t width='28%'\n   \t>\n\t<panel elementName='Panel 1'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = '#FFFFFF'\n\tbgColor = 'theme'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'travel-world'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'thisapp.messaging.ID.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Total Messages'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column><column\n   \t\t width='25%'\n   \t>\n\t<panel elementName='Panel 2'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = '#FFFFFF'\n\tbgColor = 'theme'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'travel-world'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'thisapp.soap_note.ID.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Total Soap Notes'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column><column\n   \t\t width='24%'\n   \t>\n\t<panel elementName='Panel 3'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = '#FFFFFF'\n\tbgColor = 'theme'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'travel-world'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'thisapp.appointment.ID.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Total Appointments'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column><column\n   \t\t width='23%'\n   \t>\n\t<panel elementName='Panel 4'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = '#FFFFFF'\n\tbgColor = 'theme'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'travel-world'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'thisapp.doctor_profile.ID.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Total Doctor Profiles'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row><row>\n\t<column\n   \t\t width='40%'\n   \t>\n\t<chart \n\telementName='Chart 1'\n\n\t\n\ttitle = 'Status by Duration'\n\t\n\ttype = 'Bar'\n\txtitle = 'Status'\n\tytitle = 'Duration'\n\tbgColor = '#FFFFFF'\n\ttheme = 'theme'\n\tlegendPos = 'none'\n\theightType = 'auto'\n\theightValue = '300px'\n\tappLinkName = 'thisapp'\n\tformLinkName = 'appointment'\n\txfield = 'status'\n\tyfields = 'sum:duration'\n\t\tDelugeCriteria = 'status is not null &amp;&amp; status != &quot;&quot;'\n/>\n\n</column><column\n   \t\t width='35%'\n   \t>\n\t<panel elementName='Grouped_Panel 1'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='50px'\n>\n\t<pc \n\t\tpadding = '0px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '20px'\n\tmarginRight = '20px' \n\tcolor = '#000000'\n\tsize = '16px'\n\ttype = 'Text'\n\n\n\n\n\n\n\n\t  value = 'Message Types'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '17px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n    borderColor = '#444444'\n    borderWidth = '0px'\n\t\twidth = '50%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '2px'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'health-bag-49'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n\n\t\tcriteria = 'message_type == &quot;Doctor To Patient&quot;'\n\t  value = 'thisapp.messaging.message_type.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Doctor To Patient'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc><pc \n\t\tpaddingTop = '17px'\n\tpaddingLeft = '0px'\n\tpaddingRight = '17px'\n\tpaddingBottom = '17px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\twidth = '50%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'tech-laptop'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n\n\t\tcriteria = 'message_type == &quot;System Alert&quot;'\n\t  value = 'thisapp.messaging.message_type.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'System Alerts'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '17px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n    borderColor = '#444444'\n    borderWidth = '0px'\n\t\twidth = '50%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '2px'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'health-bag-49'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n\n\t\tcriteria = 'message_type == &quot;Patient To Doctor&quot;'\n\t  value = 'thisapp.messaging.message_type.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Patient To Doctor'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc><pc \n\t\tpaddingTop = '17px'\n\tpaddingLeft = '0px'\n\tpaddingRight = '17px'\n\tpaddingBottom = '17px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\twidth = '50%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'travel-world'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n\n\t  value = 'thisapp.messaging.message_type.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Total'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column><column\n   \t\t width='25%'\n   \t>\n\t<panel elementName='Panel_Button 1'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='50px'\n>\n\t<pc \n\t\tpadding = '0px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '20px'\n\tmarginRight = '20px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\tcolor = '#2D2D2D'\n\tsize = '16px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Quick Links'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpaddingTop = '0px'\n\tpaddingLeft = '10px'\n\tpaddingRight = '10px'\n\tpaddingBottom = '10px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<image  \n\t\tmarginLeft = '5px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '40px'\n\theight = '40px'\n\ttype = 'icon'\n\tvalue = 'ui-2-square-add-08'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n\t\thAlign = 'left'\n>\n\t<text \n    action = 'OpenForm'\n\t\tcomponentLinkName = 'messaging'\n\t\ttarget = 'new-window'\n\n\tmarginLeft = '12px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'Add New Message'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\tpadding = '8px'\n\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<image  \n\t\tmarginLeft = '5px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '40px'\n\theight = '40px'\n\ttype = 'icon'\n\tvalue = 'ui-2-square-add-08'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n\t\thAlign = 'left'\n>\n\t<text \n    action = 'OpenForm'\n\t\tcomponentLinkName = 'soap_note'\n\t\ttarget = 'new-window'\n\n\tmarginLeft = '12px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'Add New SOAP Note'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\tpadding = '8px'\n\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<image  \n\t\tmarginLeft = '5px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '40px'\n\theight = '40px'\n\ttype = 'icon'\n\tvalue = 'ui-2-square-add-08'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n\t\thAlign = 'left'\n>\n\t<text \n    action = 'OpenForm'\n\t\tcomponentLinkName = 'appointment'\n\t\ttarget = 'new-window'\n\n\tmarginLeft = '12px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'Add New Appointment'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\tpadding = '8px'\n\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<image  \n\t\tmarginLeft = '5px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '40px'\n\theight = '40px'\n\ttype = 'icon'\n\tvalue = 'ui-2-square-add-08'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n\t\thAlign = 'left'\n>\n\t<text \n    action = 'OpenForm'\n\t\tcomponentLinkName = 'doctor_profile'\n\t\ttarget = 'new-window'\n\n\tmarginLeft = '12px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'Add New Doctor Profile'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row><row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<chart \n\telementName='Chart 2'\n\n\t\n\ttitle = 'Distribution by Read Status'\n\t\n\ttype = 'Pie'\n\txtitle = 'Read Status'\n\tytitle = 'Read Status'\n\tbgColor = '#FFFFFF'\n\ttheme = 'theme'\n\tlegendPos = 'center.top'\n\theightType = 'auto'\n\theightValue = '300px'\n\tappLinkName = 'thisapp'\n\tformLinkName = 'messaging'\n\txfield = 'read_status'\n\tyfields = 'count:read_status'\n\t\tDelugeCriteria = 'read_status is not null &amp;&amp; read_status != &quot;&quot;'\n/>\n\n</column>\n</row><row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<report \n\telementName='Report'\n\n\t\tappLinkName = 'thisapp'\n\t\tlinkName = 'messaging_Report'\n\t\n\t\tiszreport = 'false'\n\theightType = 'auto'\n\theightValue = '700'\n\n/>\n</column>\n</row>\n</layout>\n</zml>"
+		}
+	}
+
+
+		workflow
+		{
+
+
+
+
+		blueprint
+		{
+    			patient_care_workflow as "Patient Care Workflow"
+    			{
+        			type = Blueprint
+        			form = soap_note
+        			start
+        			{
+            			start stage = "Appointment Scheduled"
+        			}
+        			stages
+        			{
+           			"Appointment Scheduled"
+           			{
+           			}
+           			"Patient Checked In"
+           			{
+           			}
+           			"Appointment Rescheduled"
+           			{
+           			}
+           			"Appointment Cancelled"
+           			{
+           			}
+           			"Consultation In Progress"
+           			{
+           			}
+           			"SOAP Note Created"
+           			{
+           			}
+           			"Diagnosis Confirmed"
+           			{
+           			}
+           			"Further Testing Required"
+           			{
+           			}
+           			"Prescription Issued"
+           			{
+           			}
+           			"Follow-Up Scheduled"
+           			{
+           			}
+           			"Test Results Received"
+           			{
+           			}
+           			"Test Scheduled"
+           			{
+           			}
+           			"Medication Dispensed"
+           			{
+           			}
+           			"Prescription Revised"
+           			{
+           			}
+           			"Patient Monitoring Active"
+           			{
+           			}
+           			"Follow-Up Completed"
+           			{
+           			}
+           			"Follow-Up Rescheduled"
+           			{
+           			}
+           			"Follow-Up Cancelled"
+           			{
+           			}
+           			"Care Plan Updated"
+           			{
+           			}
+           			"Patient Discharged"
+           			{
+           			}
+           			"Emergency Alert Triggered"
+           			{
+           			}
+           			"Case Closed"
+           			{
+           			}
+           			"Emergency Response Initiated"
+           			{
+           			}
+           			"Patient Stabilized"
+           			{
+           			}
+           			"Patient Transferred"
+           			{
+           			}
+        			}
+        			transitions
+        			{
+    				cancel_appointment as "Cancel Appointment"
+    				{
+         				type = normal
+         				from stage = "Appointment Scheduled"
+         				to stage = "Appointment Cancelled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				cancel_follow_up as "Cancel Follow-Up"
+    				{
+         				type = normal
+         				from stage = "Follow-Up Scheduled"
+         				to stage = "Follow-Up Cancelled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				check_in_patient as "Check In Patient"
+    				{
+         				type = normal
+         				from stage = "Appointment Scheduled"
+         				to stage = "Patient Checked In"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				close_case as "Close Patient Case"
+    				{
+         				type = normal
+         				from stage = "Patient Discharged"
+         				to stage = "Case Closed"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				complete_follow_up as "Complete Follow-Up Visit"
+    				{
+         				type = normal
+         				from stage = "Follow-Up Scheduled"
+         				to stage = "Follow-Up Completed"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				confirm_diagnosis as "Confirm Diagnosis"
+    				{
+         				type = normal
+         				from stage = "SOAP Note Created"
+         				to stage = "Diagnosis Confirmed"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				confirm_diagnosis_from_results as "Confirm Diagnosis Based on Results"
+    				{
+         				type = normal
+         				from stage = "Test Results Received"
+         				to stage = "Diagnosis Confirmed"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				create_soap_note as "Create SOAP Note"
+    				{
+         				type = normal
+         				from stage = "Consultation In Progress"
+         				to stage = "SOAP Note Created"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				discharge_patient as "Discharge Patient"
+    				{
+         				type = normal
+         				from stage = "Follow-Up Completed"
+         				to stage = "Patient Discharged"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				dispense_medication as "Dispense Medication"
+    				{
+         				type = normal
+         				from stage = "Prescription Issued"
+         				to stage = "Medication Dispensed"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				initiate_emergency_response as "Initiate Emergency Protocol"
+    				{
+         				type = normal
+         				from stage = "Emergency Alert Triggered"
+         				to stage = "Emergency Response Initiated"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				issue_prescription as "Issue Prescription"
+    				{
+         				type = normal
+         				from stage = "SOAP Note Created"
+         				to stage = "Prescription Issued"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				order_tests as "Order Additional Tests"
+    				{
+         				type = normal
+         				from stage = "SOAP Note Created"
+         				to stage = "Further Testing Required"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				receive_test_results as "Receive Test Results"
+    				{
+         				type = normal
+         				from stage = "Further Testing Required"
+         				to stage = "Test Results Received"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				reschedule_appointment as "Reschedule Appointment"
+    				{
+         				type = normal
+         				from stage = "Appointment Scheduled"
+         				to stage = "Appointment Rescheduled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				reschedule_follow_up as "Reschedule Follow-Up"
+    				{
+         				type = normal
+         				from stage = "Follow-Up Scheduled"
+         				to stage = "Follow-Up Rescheduled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				resume_monitoring as "Resume Monitoring"
+    				{
+         				type = normal
+         				from stage = "Emergency Alert Triggered"
+         				to stage = "Patient Monitoring Active"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				revise_prescription as "Revise Prescription"
+    				{
+         				type = normal
+         				from stage = "Prescription Issued"
+         				to stage = "Prescription Revised"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				schedule_follow_up as "Schedule Follow-Up"
+    				{
+         				type = normal
+         				from stage = "SOAP Note Created"
+         				to stage = "Follow-Up Scheduled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				schedule_test as "Schedule Test"
+    				{
+         				type = normal
+         				from stage = "Further Testing Required"
+         				to stage = "Test Scheduled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				stabilize_patient as "Stabilize Patient"
+    				{
+         				type = normal
+         				from stage = "Emergency Response Initiated"
+         				to stage = "Patient Stabilized"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				start_consultation as "Begin Consultation"
+    				{
+         				type = normal
+         				from stage = "Patient Checked In"
+         				to stage = "Consultation In Progress"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				start_monitoring as "Begin Patient Monitoring"
+    				{
+         				type = normal
+         				from stage = "Medication Dispensed"
+         				to stage = "Patient Monitoring Active"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				transfer_patient as "Transfer to Higher Care Facility"
+    				{
+         				type = normal
+         				from stage = "Emergency Response Initiated"
+         				to stage = "Patient Transferred"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				trigger_emergency_alert as "Trigger Emergency Alert"
+    				{
+         				type = normal
+         				from stage = "Patient Monitoring Active"
+         				to stage = "Emergency Alert Triggered"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				update_care_plan as "Update Care Plan"
+    				{
+         				type = normal
+         				from stage = "Follow-Up Completed"
+         				to stage = "Care Plan Updated"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				update_care_plan_from_monitoring as "Update Care Plan Based on Monitoring"
+    				{
+         				type = normal
+         				from stage = "Patient Monitoring Active"
+         				to stage = "Care Plan Updated"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+        			}
+    			}
+    			appointment_scheduling_process as "Appointment Scheduling Process"
+    			{
+        			type = Blueprint
+        			form = appointment
+        			start
+        			{
+            			start stage = "Appointment Created"
+        			}
+        			stages
+        			{
+           			"Appointment Created"
+           			{
+           			}
+           			"Appointment Confirmed"
+           			{
+           			}
+           			"Appointment Pending Confirmation"
+           			{
+           			}
+           			"Appointment Cancelled"
+           			{
+           			}
+           			"Appointment In Progress"
+           			{
+           			}
+           			"Appointment Rescheduled"
+           			{
+           			}
+           			"Appointment Completed"
+           			{
+           			}
+           			"Appointment Closed"
+           			{
+           			}
+           			"Appointment Follow-Up Required"
+           			{
+           			}
+        			}
+        			transitions
+        			{
+    				cancel_appointment as "Cancel Appointment"
+    				{
+         				type = normal
+         				from stage = "Appointment Created"
+         				to stage = "Appointment Cancelled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				close_appointment as "Close Appointment"
+    				{
+         				type = normal
+         				from stage = "Appointment Completed"
+         				to stage = "Appointment Closed"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				complete_appointment as "Mark Appointment as Completed"
+    				{
+         				type = normal
+         				from stage = "Appointment In Progress"
+         				to stage = "Appointment Completed"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				confirm_appointment as "Confirm Appointment"
+    				{
+         				type = normal
+         				from stage = "Appointment Created"
+         				to stage = "Appointment Confirmed"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				reschedule_appointment as "Reschedule Appointment"
+    				{
+         				type = normal
+         				from stage = "Appointment Confirmed"
+         				to stage = "Appointment Rescheduled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				schedule_follow_up as "Schedule Follow-Up Appointment"
+    				{
+         				type = normal
+         				from stage = "Appointment Completed"
+         				to stage = "Appointment Follow-Up Required"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				send_confirmation_request as "Send Confirmation Request"
+    				{
+         				type = normal
+         				from stage = "Appointment Created"
+         				to stage = "Appointment Pending Confirmation"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				start_appointment as "Mark Appointment as In Progress"
+    				{
+         				type = normal
+         				from stage = "Appointment Confirmed"
+         				to stage = "Appointment In Progress"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+        			}
+    			}
+		}
+
+
+	}
+	share_settings
+	{
+			"Read"
+			{
+				name = "Read"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have read permission for all components\n"
+			}
+			"Write"
+			{
+				name = "Write"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have write permission for all components\n"
+			}
+			"Developer"
+			{
+				name = "Developer"
+				type = Developer
+				permissions = {Chat:false, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Developer Profile\n"
+			}
+			"Administrator"
+			{
+				name = "Administrator"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have all the permissions.\n"
+			}
+			"Customer"
+			{
+				name = "Customer"
+				type = Customer_Portal
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This is the default profile having only add and view permission.\n"
+			}
+			roles
+			{
+				"CEO"
+				{
+					description = "User belonging to this role can access data of all other users."
+				}
+			}
+	}
+
+
+	web
+	{
+		forms
+		{
+			form appointment
+			{
+				label placement = left
+			}
+			form doctor_profile
+			{
+				label placement = left
+			}
+			form lab_result
+			{
+				label placement = left
+			}
+			form messaging
+			{
+				label placement = left
+			}
+			form patient_profile
+			{
+				label placement = left
+			}
+			form prescription
+			{
+				label placement = left
+			}
+			form soap_note
+			{
+				label placement = left
+			}
+		}
+		reports
+		{
+			report messaging_Report
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = -1
+						datablock1
+						(
+							layout type = -1
+							fields
+							(
+								sender_1 as "Sender"
+								recipient as "Recipient"
+								appointment as "Appointment"
+								subject_1 as "Subject"
+								body as "Body"
+								sent_at as "Sent At"
+								read_status as "Read Status"
+								encryption_status as "Encryption Status"
+								message_type as "Message Type"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    		 				Add 
+    		 				Import 
+    		 				Export 
+    	 				)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+    				)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = -2
+		     				title = "Overview"
+							fields
+							(
+								sender_1 as "Sender"
+								recipient as "Recipient"
+								appointment as "Appointment"
+								subject_1 as "Subject"
+								body as "Body"
+								sent_at as "Sent At"
+								read_status as "Read Status"
+								encryption_status as "Encryption Status"
+								message_type as "Message Type"
+							)
+						)
+						datablock2
+						(
+							layout type = -2
+		     				title = "Appointment"
+		     				related field = appointment
+							fields
+							(
+								appointment_id as "Appointment ID"
+								patient as "Patient"
+								doctor as "Doctor"
+								scheduled_date as "Scheduled Date"
+								scheduled_time as "Scheduled Time"
+								duration as "Duration"
+								status as "Status"
+								reason_for_visit as "Reason For Visit"
+								location as "Location"
+								notes as "Notes"
+							)
+						)
+						datablock3
+						(
+							layout type = -2
+		     				title = "Sender"
+		     				related field = sender_1
+							fields
+							(
+								patient_id as "Patient ID"
+								full_name as "Full Name"
+								date_of_birth as "Date Of Birth"
+								gender as "Gender"
+								contact_number as "Contact Number"
+								email as "Email"
+								medical_history as "Medical History"
+								allergies as "Allergies"
+								emergency_contact as "Emergency Contact"
+								primary_care_physician as "Primary Care Physician"
+							)
+						)
+						datablock4
+						(
+							layout type = -2
+		     				title = "Recipient"
+		     				related field = recipient
+							fields
+							(
+								doctor_id as "Doctor ID"
+								full_name as "Full Name"
+								specialty as "Specialty"
+								license_number as "License Number"
+								contact_number as "Contact Number"
+								email as "Email"
+								department as "Department"
+								office_location as "Office Location"
+								availability_status as "Availability Status"
+								professional_bio as "Professional Bio"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    	 				)
+    				)
+				)
+			}
+			report messaging_by_message_type
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								subject_1 as "Subject"
+								sender_1 as "Sender"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    		 				Add 
+    		 				Import 
+    		 				Export 
+    	 				)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+    				)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = -2
+							fields
+							(
+								sender_1 as "Sender"
+								recipient as "Recipient"
+								appointment as "Appointment"
+								subject_1 as "Subject"
+								body as "Body"
+								sent_at as "Sent At"
+								read_status as "Read Status"
+								encryption_status as "Encryption Status"
+								message_type as "Message Type"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    	 				)
+    				)
+				)
+			}
+			report soap_note_Report
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = -1
+						datablock1
+						(
+							layout type = -1
+							fields
+							(
+								appointment as "Appointment"
+								subjective as "Subjective"
+								objective as "Objective"
+								assessment as "Assessment"
+								plan as "Plan"
+								entered_by as "Entered By"
+								entry_date as "Entry Date"
+								entry_time as "Entry Time"
+								last_updated as "Last Updated"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    		 				Add 
+    		 				Import 
+    		 				Export 
+    	 				)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+    				)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = -2
+		     				title = "Overview"
+							fields
+							(
+								appointment as "Appointment"
+								subjective as "Subjective"
+								objective as "Objective"
+								assessment as "Assessment"
+								plan as "Plan"
+								entered_by as "Entered By"
+								entry_date as "Entry Date"
+								entry_time as "Entry Time"
+								last_updated as "Last Updated"
+							)
+						)
+						datablock2
+						(
+							layout type = -2
+		     				title = "Entered By"
+		     				related field = entered_by
+							fields
+							(
+								doctor_id as "Doctor ID"
+								full_name as "Full Name"
+								specialty as "Specialty"
+								license_number as "License Number"
+								contact_number as "Contact Number"
+								email as "Email"
+								department as "Department"
+								office_location as "Office Location"
+								availability_status as "Availability Status"
+								professional_bio as "Professional Bio"
+							)
+						)
+						datablock3
+						(
+							layout type = -2
+		     				title = "Appointment"
+		     				related field = appointment
+							fields
+							(
+								appointment_id as "Appointment ID"
+								patient as "Patient"
+								doctor as "Doctor"
+								scheduled_date as "Scheduled Date"
+								scheduled_time as "Scheduled Time"
+								duration as "Duration"
+								status as "Status"
+								reason_for_visit as "Reason For Visit"
+								location as "Location"
+								notes as "Notes"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    	 				)
+    				)
+				)
+			}
+			report appointment_Report
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = -1
+						datablock1
+						(
+							layout type = -1
+							fields
+							(
+								appointment_id as "Appointment ID"
+								patient as "Patient"
+								doctor as "Doctor"
+								scheduled_date as "Scheduled Date"
+								scheduled_time as "Scheduled Time"
+								duration as "Duration"
+								status as "Status"
+								reason_for_visit as "Reason For Visit"
+								location as "Location"
+								notes as "Notes"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    		 				Add 
+    		 				Import 
+    		 				Export 
+    	 				)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+    				)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = -2
+		     				title = "Overview"
+							fields
+							(
+								appointment_id as "Appointment ID"
+								patient as "Patient"
+								doctor as "Doctor"
+								scheduled_date as "Scheduled Date"
+								scheduled_time as "Scheduled Time"
+								duration as "Duration"
+								status as "Status"
+								reason_for_visit as "Reason For Visit"
+								location as "Location"
+								notes as "Notes"
+							)
+						)
+						datablock2
+						(
+							layout type = -2
+		     				title = "Patient"
+		     				related field = patient
+							fields
+							(
+								patient_id as "Patient ID"
+								full_name as "Full Name"
+								date_of_birth as "Date Of Birth"
+								gender as "Gender"
+								contact_number as "Contact Number"
+								email as "Email"
+								medical_history as "Medical History"
+								allergies as "Allergies"
+								emergency_contact as "Emergency Contact"
+								primary_care_physician as "Primary Care Physician"
+							)
+						)
+						datablock3
+						(
+							layout type = -2
+		     				title = "Doctor"
+		     				related field = doctor
+							fields
+							(
+								doctor_id as "Doctor ID"
+								full_name as "Full Name"
+								specialty as "Specialty"
+								license_number as "License Number"
+								contact_number as "Contact Number"
+								email as "Email"
+								department as "Department"
+								office_location as "Office Location"
+								availability_status as "Availability Status"
+								professional_bio as "Professional Bio"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    	 				)
+    				)
+				)
+			}
+			report appointment_by_status
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								appointment_id as "Appointment ID"
+								patient as "Patient"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    		 				Add 
+    		 				Import 
+    		 				Export 
+    	 				)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+    				)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = -2
+							fields
+							(
+								appointment_id as "Appointment ID"
+								patient as "Patient"
+								doctor as "Doctor"
+								scheduled_date as "Scheduled Date"
+								scheduled_time as "Scheduled Time"
+								duration as "Duration"
+								status as "Status"
+								reason_for_visit as "Reason For Visit"
+								location as "Location"
+								notes as "Notes"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    	 				)
+    				)
+				)
+			}
+			report doctor_profile_Report
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = -1
+						datablock1
+						(
+							layout type = -1
+							fields
+							(
+								doctor_id as "Doctor ID"
+								full_name as "Full Name"
+								specialty as "Specialty"
+								license_number as "License Number"
+								contact_number as "Contact Number"
+								email as "Email"
+								department as "Department"
+								office_location as "Office Location"
+								availability_status as "Availability Status"
+								professional_bio as "Professional Bio"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    		 				Add 
+    		 				Import 
+    		 				Export 
+    	 				)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+    				)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = -2
+		     				title = "Overview"
+							fields
+							(
+								doctor_id as "Doctor ID"
+								full_name as "Full Name"
+								specialty as "Specialty"
+								license_number as "License Number"
+								contact_number as "Contact Number"
+								email as "Email"
+								department as "Department"
+								office_location as "Office Location"
+								availability_status as "Availability Status"
+								professional_bio as "Professional Bio"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    	 				)
+    				)
+				)
+			}
+			report doctor_profile_by_specialty
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								full_name as "Full Name"
+								license_number as "License Number"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    		 				Add 
+    		 				Import 
+    		 				Export 
+    	 				)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+    				)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = -2
+							fields
+							(
+								doctor_id as "Doctor ID"
+								full_name as "Full Name"
+								specialty as "Specialty"
+								license_number as "License Number"
+								contact_number as "Contact Number"
+								email as "Email"
+								department as "Department"
+								office_location as "Office Location"
+								availability_status as "Availability Status"
+								professional_bio as "Professional Bio"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    	 				)
+    				)
+				)
+			}
+			report prescription_Report
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = -1
+						datablock1
+						(
+							layout type = -1
+							fields
+							(
+								patient as "Patient"
+								doctor as "Doctor"
+								medication_name as "Medication Name"
+								dosage as "Dosage"
+								frequency as "Frequency"
+								start_date as "Start Date"
+								end_date as "End Date"
+								prescribed_date as "Prescribed Date"
+								status as "Status"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    		 				Add 
+    		 				Import 
+    		 				Export 
+    	 				)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+    				)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = -2
+		     				title = "Overview"
+							fields
+							(
+								patient as "Patient"
+								doctor as "Doctor"
+								medication_name as "Medication Name"
+								dosage as "Dosage"
+								frequency as "Frequency"
+								start_date as "Start Date"
+								end_date as "End Date"
+								prescribed_date as "Prescribed Date"
+								status as "Status"
+							)
+						)
+						datablock2
+						(
+							layout type = -2
+		     				title = "Doctor"
+		     				related field = doctor
+							fields
+							(
+								doctor_id as "Doctor ID"
+								full_name as "Full Name"
+								specialty as "Specialty"
+								license_number as "License Number"
+								contact_number as "Contact Number"
+								email as "Email"
+								department as "Department"
+								office_location as "Office Location"
+								availability_status as "Availability Status"
+								professional_bio as "Professional Bio"
+							)
+						)
+						datablock3
+						(
+							layout type = -2
+		     				title = "Patient"
+		     				related field = patient
+							fields
+							(
+								patient_id as "Patient ID"
+								full_name as "Full Name"
+								date_of_birth as "Date Of Birth"
+								gender as "Gender"
+								contact_number as "Contact Number"
+								email as "Email"
+								medical_history as "Medical History"
+								allergies as "Allergies"
+								emergency_contact as "Emergency Contact"
+								primary_care_physician as "Primary Care Physician"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    	 				)
+    				)
+				)
+			}
+			report prescription_by_status
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								medication_name as "Medication Name"
+								dosage as "Dosage"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    		 				Add 
+    		 				Import 
+    		 				Export 
+    	 				)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+    				)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = -2
+							fields
+							(
+								patient as "Patient"
+								doctor as "Doctor"
+								medication_name as "Medication Name"
+								dosage as "Dosage"
+								frequency as "Frequency"
+								start_date as "Start Date"
+								end_date as "End Date"
+								prescribed_date as "Prescribed Date"
+								status as "Status"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    	 				)
+    				)
+				)
+			}
+			report patient_profile_Report
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = -1
+						datablock1
+						(
+							layout type = -1
+							fields
+							(
+								patient_id as "Patient ID"
+								full_name as "Full Name"
+								date_of_birth as "Date Of Birth"
+								gender as "Gender"
+								contact_number as "Contact Number"
+								email as "Email"
+								medical_history as "Medical History"
+								allergies as "Allergies"
+								emergency_contact as "Emergency Contact"
+								primary_care_physician as "Primary Care Physician"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    		 				Add 
+    		 				Import 
+    		 				Export 
+    	 				)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+    				)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = -2
+		     				title = "Overview"
+							fields
+							(
+								patient_id as "Patient ID"
+								full_name as "Full Name"
+								date_of_birth as "Date Of Birth"
+								gender as "Gender"
+								contact_number as "Contact Number"
+								email as "Email"
+								medical_history as "Medical History"
+								allergies as "Allergies"
+								emergency_contact as "Emergency Contact"
+								primary_care_physician as "Primary Care Physician"
+							)
+						)
+						datablock2
+						(
+							layout type = -2
+		     				title = "Primary Care Physician"
+		     				related field = primary_care_physician
+							fields
+							(
+								doctor_id as "Doctor ID"
+								full_name as "Full Name"
+								specialty as "Specialty"
+								license_number as "License Number"
+								contact_number as "Contact Number"
+								email as "Email"
+								department as "Department"
+								office_location as "Office Location"
+								availability_status as "Availability Status"
+								professional_bio as "Professional Bio"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    	 				)
+    				)
+				)
+			}
+			report patient_profile_by_gender
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								full_name as "Full Name"
+								emergency_contact as "Emergency Contact"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    		 				Add 
+    		 				Import 
+    		 				Export 
+    	 				)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+    				)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = -2
+							fields
+							(
+								patient_id as "Patient ID"
+								full_name as "Full Name"
+								date_of_birth as "Date Of Birth"
+								gender as "Gender"
+								contact_number as "Contact Number"
+								email as "Email"
+								medical_history as "Medical History"
+								allergies as "Allergies"
+								emergency_contact as "Emergency Contact"
+								primary_care_physician as "Primary Care Physician"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    	 				)
+    				)
+				)
+			}
+			report lab_result_Report
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = -1
+						datablock1
+						(
+							layout type = -1
+							fields
+							(
+								patient as "Patient"
+								doctor as "Doctor"
+								test_name as "Test Name"
+								result_value as "Result Value"
+								reference_range as "Reference Range"
+								collected_date as "Collected Date"
+								reported_date as "Reported Date"
+								status as "Status"
+								notes as "Notes"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    		 				Add 
+    		 				Import 
+    		 				Export 
+    	 				)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+    				)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = -2
+		     				title = "Overview"
+							fields
+							(
+								patient as "Patient"
+								doctor as "Doctor"
+								test_name as "Test Name"
+								result_value as "Result Value"
+								reference_range as "Reference Range"
+								collected_date as "Collected Date"
+								reported_date as "Reported Date"
+								status as "Status"
+								notes as "Notes"
+							)
+						)
+						datablock2
+						(
+							layout type = -2
+		     				title = "Patient"
+		     				related field = patient
+							fields
+							(
+								patient_id as "Patient ID"
+								full_name as "Full Name"
+								date_of_birth as "Date Of Birth"
+								gender as "Gender"
+								contact_number as "Contact Number"
+								email as "Email"
+								medical_history as "Medical History"
+								allergies as "Allergies"
+								emergency_contact as "Emergency Contact"
+								primary_care_physician as "Primary Care Physician"
+							)
+						)
+						datablock3
+						(
+							layout type = -2
+		     				title = "Doctor"
+		     				related field = doctor
+							fields
+							(
+								doctor_id as "Doctor ID"
+								full_name as "Full Name"
+								specialty as "Specialty"
+								license_number as "License Number"
+								contact_number as "Contact Number"
+								email as "Email"
+								department as "Department"
+								office_location as "Office Location"
+								availability_status as "Availability Status"
+								professional_bio as "Professional Bio"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    	 				)
+    				)
+				)
+			}
+			report lab_result_by_status
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								test_name as "Test Name"
+								result_value as "Result Value"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    		 				Add 
+    		 				Import 
+    		 				Export 
+    	 				)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+    				)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = -2
+							fields
+							(
+								patient as "Patient"
+								doctor as "Doctor"
+								test_name as "Test Name"
+								result_value as "Result Value"
+								reference_range as "Reference Range"
+								collected_date as "Collected Date"
+								reported_date as "Reported Date"
+								status as "Status"
+								notes as "Notes"
+							)
+						)
+					)
+					menu
+    				(
+    	 				header
+    	 				(
+    		 				Edit 
+    		 				Duplicate 
+    		 				Delete 
+    		 				Print 
+    	 				)
+    				)
+				)
+			}
+		}
+		menu
+		{
+			space Space
+			{
+				displayname = "Space"
+				icon = "objects-spaceship"
+
+				section Section_1
+				{
+					displayname = "Dashboard"
+					icon = "ui-1-dashboard-half"
+					page DashBoard
+					{
+						icon = "ui-1-dashboard-half"
+					}
+				}
+				section Section_2
+				{
+					displayname = "Messages"
+					icon = "ui-3-chat-33"
+					form  messaging
+					{
+						icon = "ui-1-bold-add"
+					}
+					report messaging_Report
+					{
+						icon = "travel-world"
+					}
+					report messaging_by_message_type
+					{
+						icon = "ui-3-chat-33"
+					}
+				}
+				section Section_3
+				{
+					displayname = "Soap Notes"
+					icon = "business-notes"
+					form  soap_note
+					{
+						icon = "ui-1-bold-add"
+					}
+					report soap_note_Report
+					{
+						icon = "travel-world"
+					}
+				}
+				section Section_4
+				{
+					displayname = "Appointments"
+					icon = "ui-1-calendar-grid-61"
+					form  appointment
+					{
+						icon = "ui-1-bold-add"
+					}
+					report appointment_Report
+					{
+						icon = "travel-world"
+					}
+					report appointment_by_status
+					{
+						icon = "design-2-selection"
+					}
+				}
+				section Section_5
+				{
+					displayname = "Doctor Profiles"
+					icon = "health-bag-49"
+					form  doctor_profile
+					{
+						icon = "ui-1-bold-add"
+					}
+					report doctor_profile_Report
+					{
+						icon = "travel-world"
+					}
+					report doctor_profile_by_specialty
+					{
+						icon = "food-microwave"
+					}
+				}
+				section Section_6
+				{
+					displayname = "Prescriptions"
+					icon = "health-pill-container-47"
+					form  prescription
+					{
+						icon = "ui-1-bold-add"
+					}
+					report prescription_Report
+					{
+						icon = "travel-world"
+					}
+					report prescription_by_status
+					{
+						icon = "design-2-selection"
+					}
+				}
+				section Section_7
+				{
+					displayname = "Patient Profiles"
+					icon = "users-2-contacts-44"
+					form  patient_profile
+					{
+						icon = "ui-1-bold-add"
+					}
+					report patient_profile_Report
+					{
+						icon = "travel-world"
+					}
+					report patient_profile_by_gender
+					{
+						icon = "design-2-selection"
+					}
+				}
+				section Section_8
+				{
+					displayname = "Lab Results"
+					icon = "health-flask"
+					form  lab_result
+					{
+						icon = "ui-1-bold-add"
+					}
+					report lab_result_Report
+					{
+						icon = "travel-world"
+					}
+					report lab_result_by_status
+					{
+						icon = "design-2-selection"
+					}
+				}
+				section ZC_App_Preferences
+				{
+					displayname = "App Preferences"
+					icon = "design-app"
+					systemcomponent
+					{
+						type = localization
+						displayname = "Language Selection"
+						icon = "education-language"
+					}
+					systemcomponent
+					{
+						type = connection
+						displayname = "Integrations"
+						icon = "tech-2-connection"
+					}
+				}
+				section ZC_Approvals
+				{
+					displayname = "Approvals"
+					icon = "ui-2-hourglass"
+					systemcomponent
+					{
+						type = approval
+						approval status = pending
+						displayname = "Pending Tasks"
+						icon = "ui-2-hourglass"
+					}
+					systemcomponent
+					{
+						type = approval
+						approval status = completed
+						displayname = "Completed Tasks"
+						icon = "design-todo"
+					}
+				}
+				section SharedAnalytics_Section
+				{
+					type = shared_user_report_section
+					displayname = "Reports"
+					icon = "business-chart-bar-33"
+				}
+			}
+			preference
+			{
+				icon
+				{
+					style = solid
+					show = {space,section,component}
+				}
+			}
+		}
+		customize
+		{
+			new theme = 11
+			font = "poppins"
+			color options
+			{
+				color = "5"
+			}
+			logo
+			{
+				preference = "none"
+				placement = "left"
+			}
+		}
+	}
+	phone
+	{
+		forms
+		{
+			form appointment
+			{
+				label placement = auto
+			}
+			form doctor_profile
+			{
+				label placement = auto
+			}
+			form lab_result
+			{
+				label placement = auto
+			}
+			form messaging
+			{
+				label placement = auto
+			}
+			form patient_profile
+			{
+				label placement = auto
+			}
+			form prescription
+			{
+				label placement = auto
+			}
+			form soap_note
+			{
+				label placement = auto
+			}
+		}
+		customize
+		{
+			layout = slidingpane
+			font = "default"
+			style = "3"
+			color options
+			{
+				color = rose
+			}
+			logo
+			{
+				preference = "none"
+			}
+		}
+	}
+	tablet
+	{
+		forms
+		{
+			form appointment
+			{
+				label placement = auto
+			}
+			form doctor_profile
+			{
+				label placement = auto
+			}
+			form lab_result
+			{
+				label placement = auto
+			}
+			form messaging
+			{
+				label placement = auto
+			}
+			form patient_profile
+			{
+				label placement = auto
+			}
+			form prescription
+			{
+				label placement = auto
+			}
+			form soap_note
+			{
+				label placement = auto
+			}
+		}
+		customize
+		{
+			layout = slidingpane
+			font = "default"
+			style = "3"
+			color options
+			{
+				color = rose
+			}
+			logo
+			{
+				preference = "none"
+			}
+		}
+	}
+	translation
+{
+{"Language_Settings":{"LANGAGUE_WITH_LOGIN":"browser"}}
+}
+}
